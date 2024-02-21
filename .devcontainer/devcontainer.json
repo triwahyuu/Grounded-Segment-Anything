@@ -1,0 +1,52 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+{
+	"name": "dev",
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"context": ".."
+	},
+	"runArgs": [
+		"--gpus=all",
+		"--privileged",
+		"--net=host",
+		"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		"-v", "/dev/video0:/dev/video0",
+		"-e", "DISPLAY=${localEnv:DISPLAY}"
+	],
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {}
+	},
+	"postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
+	"mounts": [
+		"source=gsam-bashhistory,target=/commandhistory,type=volume"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools-extension-pack",
+				"xaver.clang-format",
+				"ms-azuretools.vscode-docker",
+				"ms-python.python",
+				"ms-python.black-formatter",
+				"ms-toolsai.jupyter",
+				"ms-python.vscode-pylance"
+			],
+			"settings": {
+				"dev.containers.copyGitConfig": true,
+				"python.defaultInterpreterPath": "/opt/conda/bin/python3",
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"terminal.integrated.profiles.linux": {
+					"zsh": {
+						"path": "/usr/bin/zsh"
+					}
+				},
+				"[python]": {
+					"editor.formatOnSave": true,
+					"editor.defaultFormatter": "ms-python.black-formatter"
+				}
+			}
+		}
+	}
+}
