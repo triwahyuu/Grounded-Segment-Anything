@@ -1,7 +1,7 @@
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-devel
 
 # Arguments to build Docker Image using CUDA
-ARG USE_CUDA=0
+ARG USE_CUDA=1
 ARG TORCH_ARCH=
 
 ENV AM_I_DOCKER True
@@ -28,3 +28,6 @@ WORKDIR /home/appuser
 RUN pip install --no-cache-dir diffusers[torch]==0.15.1 opencv-python==4.7.0.72 \
     pycocotools==2.0.6 matplotlib==3.5.3 \
     onnxruntime==1.14.1 onnx==1.13.1 ipykernel==6.16.2 scipy gradio openai
+
+RUN pip install git+https://github.com/xinyu1205/recognize-anything.git && \
+    pip install -r requirements.txt
